@@ -11,3 +11,5 @@ secret*
 password*
 output/temp/
 .quota.json
+.memory.json
+Private

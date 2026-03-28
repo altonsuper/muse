@@ -40,8 +40,9 @@ async function callGroq(prompt) {
   lastRequestTimestamp = Date.now();
 
   const model = config.getGroqModel();
-  const url = `https://api.groq.com/v1/models/${model}/invoke`;
+  const url = 'https://api.groq.com/openai/v1/responses';
   const payload = {
+    model,
     input: prompt,
   };
 

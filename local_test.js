@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const ARCHITECT_PATH = path.join(__dirname, 'agent', 'architect_agent.js');
 
-function runLocalTest() {
+async function runLocalTest() {
   if (!fs.existsSync(ARCHITECT_PATH)) {
     console.error('Architect agent not found:', ARCHITECT_PATH);
     process.exit(1);
@@ -12,7 +12,17 @@ function runLocalTest() {
   process.env.ENABLE_GROQ = 'false';
   process.env.NODE_ENV = 'local_test';
 
-  require(ARCHITECT_PATH);
+  const architect = require(ARCHITECT_PATH);
+  if (architect && typeof architect.main === 'function') {
+    await architect.main();
+    return;
+  }
+
+  console.error('Architect agent does not expose a main() function.');
+  process.exit(1);
 }
 
-runLocalTest();
+runLocalTest().catch((error) => {
+  console.error('Local test failed:', error);
+  process.exit(1);
+});

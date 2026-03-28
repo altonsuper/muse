@@ -6,6 +6,7 @@ const config = require('../utils/config');
 const groqClient = require('../utils/groq_client');
 const logger = require('../utils/logger');
 const heartbeat = require('../utils/heartbeat');
+const memory = require('../utils/memory');
 const reviewer = require('./reviewer_agent');
 const worker = require('./worker_template');
 
@@ -111,6 +112,7 @@ async function main() {
       timestamp: new Date().toISOString(),
       version: 'ron_GIT_v1.0',
       groqEnabled: config.isGroqEnabled(),
+      source: groqResponse.success ? 'groq' : 'fallback',
     },
     result: taskResult,
   };
@@ -118,6 +120,15 @@ async function main() {
   saveOutputFiles(taskResult.generatedFiles || []);
   const savedPath = saveResult(output);
   quotaChecker.consumeQuota();
+  memory.recordInteraction({
+    prompt,
+    resultSummary: taskResult.summary,
+    source: groqResponse.success ? 'groq' : 'fallback',
+    payload: {
+      fileCount: (taskResult.generatedFiles || []).length,
+      responseStatus: groqResponse.status || null,
+    },
+  });
   logger.info('architect.complete', { savedPath });
   heartbeat.stopHeartbeat();
   logger.updateStatus('Workflow complete', { savedPath });

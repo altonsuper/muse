@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "prompt": "Create a minimal HTML game with two files. Generate a simple browser-based example that can be opened locally.",
+    "timestamp": "2026-03-28T10:03:44.328Z",
+    "version": "ron_GIT_v1.0",
+    "groqEnabled": true,
+    "source": "fallback"
+  },
+  "result": {
+    "prompt": "Create a minimal HTML game with two files. Generate a simple browser-based example that can be opened locally.",
+    "generatedFiles": [
+      {
+        "fileName": "game1.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Game 1 - Counter Click</title>\n    <style>\n      body { font-family: Arial, sans-serif; background: #111; color: #f2f2f2; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }\n      #game { text-align: center; }\n      button { margin-top: 16px; padding: 10px 18px; font-size: 16px; }\n    </style>\n  </head>\n  <body>\n    <div id=\"game\">\n      <h1>Game 1 - Counter Click</h1>\n      <div><p>Click the button to increase the counter.</p><p>Count: <span id=\"count\">0</span></p></div>\n      <button id=\"action\">Click me</button>\n    </div>\n    <script>\nconst button = document.getElementById('action');\nconst countElement = document.getElementById('count');\nlet count = 0;\nbutton.textContent = 'Tap me';\nbutton.addEventListener('click', () => {\n  count += 1;\n  countElement.textContent = count;\n});\n    </script>\n  </body>\n</html>"
+      },
+      {
+        "fileName": "game2.html",
+        "content": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Game 2 - Simple Dodge</title>\n    <style>\n      body { font-family: Arial, sans-serif; background: #111; color: #f2f2f2; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }\n      #game { text-align: center; }\n      button { margin-top: 16px; padding: 10px 18px; font-size: 16px; }\n    </style>\n  </head>\n  <body>\n    <div id=\"game\">\n      <h1>Game 2 - Simple Dodge</h1>\n      <div><p>Use the \"Move\" button and avoid the red square.</p><canvas id=\"gameCanvas\" width=\"320\" height=\"240\" style=\"border:1px solid #666; background:#000\"></canvas></div>\n      <button id=\"action\">Click me</button>\n    </div>\n    <script>\nconst canvas = document.getElementById('gameCanvas');\nconst ctx = canvas.getContext('2d');\nlet x = 150;\nlet y = 110;\nlet speed = 10;\n\nfunction draw() {\n  ctx.clearRect(0, 0, canvas.width, canvas.height);\n  ctx.fillStyle = '#ff4444';\n  ctx.fillRect(x, y, 20, 20);\n}\n\nwindow.addEventListener('keydown', (event) => {\n  if (event.key === 'ArrowLeft') x = Math.max(0, x - speed);\n  if (event.key === 'ArrowRight') x = Math.min(canvas.width - 20, x + speed);\n  if (event.key === 'ArrowUp') y = Math.max(0, y - speed);\n  if (event.key === 'ArrowDown') y = Math.min(canvas.height - 20, y + speed);\n  draw();\n});\n\ndraw();\n    </script>\n  </body>\n</html>"
+      }
+    ],
+    "summary": "Generated HTML output from the requested prompt."
+  }
+}

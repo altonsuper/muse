@@ -1,0 +1,64 @@
+{
+  "id": "resp_01kmsyk153f08sm5hf29zchtvg",
+  "object": "response",
+  "status": "completed",
+  "created_at": 1774692435,
+  "output": [
+    {
+      "type": "reasoning",
+      "id": "resp_01kmsyk153f09b1ba7gvzxntng",
+      "status": "completed",
+      "summary": []
+    },
+    {
+      "type": "message",
+      "id": "msg_01kmsyk153f09vp45xamd3g1x6",
+      "status": "completed",
+      "role": "assistant",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "**Game Example: Guess the Number**\n\nIn this example, we'll create a simple browser-based game where the user has to guess a randomly generated number. The game will continue until the user guesses the number correctly.\n\n### game.html\n```html\n<!-- game.html -->\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Guess the Number</title>\n    <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n    <h1>Guess the Number</h1>\n    <input id=\"guess\" type=\"number\" placeholder=\"Enter your guess\">\n    <button id=\"submit\">Submit</button>\n    <p id=\"feedback\"></p>\n\n    <script src=\"script.js\"></script>\n</body>\n</html>\n```\n\n### style.css (optional)\n```css\n/* style.css */\n\nbody {\n    font-family: Arial, sans-serif;\n    text-align: center;\n}\n\ninput {\n    width: 50%;\n    margin-bottom: 10px;\n}\n\nbutton {\n    padding: 10px 20px;\n    border: none;\n    border-radius: 5px;\n    background-color: #4CAF50;\n    color: #fff;\n    cursor: pointer;\n}\n\nbutton:hover {\n    background-color: #3e8e41;\n}\n\n#feedback {\n    color: #333;\n}\n```\n\n### script.js\n```javascript\n// script.js\n\n// Generate a random number between 1 and 100\nlet secretNumber = Math.floor(Math.random() * 100) + 1;\nlet attempts = 0;\nlet feedback = document.getElementById('feedback');\n\n// Function to check if the user's guess is correct\nfunction checkGuess() {\n    let guess = parseInt(document.getElementById('guess').value);\n    attempts++;\n\n    if (guess < secretNumber) {\n        feedback.innerText = `Too low! (Attempts: ${attempts})`;\n    } else if (guess > secretNumber) {\n        feedback.innerText = `Too high! (Attempts: ${attempts})`;\n    } else {\n        feedback.innerText = ` Congratulations! You guessed the number in ${attempts} attempts.`;\n        document.getElementById('submit').disabled = true; // Disable the submit button\n    }\n}\n\n// Add event listener to the submit button\ndocument.getElementById('submit').addEventListener('click', checkGuess);\n```\n\n**How to play:**\n\n1. Save both files in the same directory.\n2. Open `game.html` in a web browser.\n3. Input your guess into the text box and click the \"Submit\" button.\n4. The game will provide feedback based on your guess.\n5. Keep guessing until you guess the number correctly.\n\n**Note:** This code uses ES6+ syntax and should work in modern browsers. If you need to support older browsers, you may need to modify the script.js file accordingly.",
+          "annotations": [],
+          "logprobs": null
+        }
+      ]
+    }
+  ],
+  "previous_response_id": null,
+  "model": "llama-3.1-8b-instant",
+  "reasoning": null,
+  "max_output_tokens": null,
+  "text": {
+    "format": {
+      "type": "text"
+    }
+  },
+  "tools": [],
+  "tool_choice": "auto",
+  "truncation": "disabled",
+  "metadata": {},
+  "groq": null,
+  "temperature": 1,
+  "top_p": 1,
+  "user": null,
+  "service_tier": "default",
+  "background": false,
+  "error": null,
+  "incomplete_details": null,
+  "usage": {
+    "input_tokens": 56,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 617,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 673
+  },
+  "parallel_tool_calls": true,
+  "store": false,
+  "top_logprobs": null,
+  "max_tool_calls": null
+}
