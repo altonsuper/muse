@@ -1,0 +1,13 @@
+.env
+.env.local
+*.log
+status_monitor.txt
+aianswer.log
+.DS_Store
+node_modules/
+*.key
+*.pem
+secret*
+password*
+output/temp/
+.quota.json

@@ -1,0 +1,203 @@
+====================================================================
+📘 ron_GIT - BLUEPRINT (V1.0)
+====================================================================
+
+====================================================================
+[ LOKAL PC ] - REMOTE CONTROL ONLY (Zero Compute, Zero Key)
+====================================================================
+│
+├── ⚙️ Normal Promt < by human
+│   ├── 📄 PROMPT.txt          <-- [INPUT] Perintah / "stop" / null(otonom)
+│   ├── 📄 aianswer.log        <-- [LOG] Riwayat jawaban agen (timestamped)
+│   └── 📄 status_monitor.txt  <-- [STATUS] Kuota API, health agent, last sync
+│
+├── 🚀 OTOMATISASI LOKAL (Sync Only)
+│   ├── 📄 sync.bat            <-- [WINDOWS] Auto: push → wait → pull
+│   ├── 📄 sync.sh             <-- [LINUX/MAC] Auto: push → wait → pull
+│   ├── 📄 gitpush.bat         <-- Manual push (fallback)
+│   ├── 📄 gitpull.bat         <-- Manual pull (fallback)
+│   └── 📄 local_test.js       <-- [DEV] Simulasi loop tanpa API (optional)
+│
+└── 📁 SCRIPT/                 <-- [FINAL SANCTUARY] Hasil yang udah di-approve
+    └── (User manually copy from output/ → SCRIPT/ after review)
+
+====================================================================
+[ GITHUB REPO ] - STATELESS EXECUTION + SECURE VAULT
+====================================================================
+│
+├── 🔐 GITHUB SECRETS          <-- [BRANKAS] Groq, Tavily, Supabase, Git Token
+│   ├── GROQ_API_KEY
+│   ├── TAVILY_API_KEY
+│   ├── SUPABASE_URL + KEY
+│   └── GIT_PAT_TOKEN          <-- Untuk auto-commit dari workflow
+│
+├── 📁 input/
+│   └── 📄 PROMPT.txt          <-- Mirror dari lokal (dibaca agent)
+│
+├── 📁 output/                 <-- [GUDANG HASIL] Auto-generated, timestamped
+│   ├── 📄 result_YYYYMMDD_HHMM.json
+│   ├── 📄 result_YYYYMMDD_HHMM.png
+│   └── 📄 ...                 <-- Semua hasil, nggak pernah di-overwrite
+│
+├── 📁 selected/               <-- [USER APPROVED] Hasil yang udah dipilih final
+│   └── 📄 final_patch.json    <-- Contoh: User copy dari output/ → selected/
+│
+├── 📁 agent/
+│   ├── 📄 architect_agent.js  <-- [MANDOR] Orkestrasi utama
+│   ├── 📄 worker_template.js  <-- Template untuk coding/search/visual agent
+│   └── 📄 reviewer_agent.js   <-- [QC] Validasi syntax + logic
+│
+├── 📁 utils/
+│   ├── 📄 validator.js        <-- Rules: JSON schema, regex pattern
+│   ├── 📄 quota_checker.js    <-- Cek limit API sebelum call
+│   ├── 📄 logger.js           <-- Structured logging ke aianswer.log
+│   └── 📄 heartbeat.js        <-- Monitor agent health (anti-hang)
+│
+├── 📁 .github/workflows/
+│   └── 📄 ai_loop.yml         <-- [JANTUNG] Trigger + Timeout + Retry logic
+│
+└── 📄 README.md               <-- Setup guide, troubleshooting, FAQ
+
+====================================================================
+[ EKSTERNAL SERVICES ] - SECURE API CALLS ONLY
+====================================================================
+│
+├── 🤖 Groq API                <-- LLM Inference (Llama3, Mixtral)
+├── 🔍 Tavily API              <-- Web Search (real-time info)
+├── 🗄️ Supabase (pgvector)    <-- Vector DB (memori jangka panjang)
+└── 🔄 GitHub API              <-- Auto-commit/push dari workflow
+
+====================================================================
+[ DECISION FLOW ] - The Loop Logic V1.0
+====================================================================
+[ START: GitHub Actions Trigger ]
+│
+├─► (1) architect_agent.js START
+│   ├─► Cek quota_checker.js → Jika limit tercapai → ABORT + Notify lokal
+│   ├─► Baca input/PROMPT.txt
+│   ├─► Jika PROMPT = "stop" → Exit gracefully, update status_monitor
+│   ├─► Jika PROMPT = null → Mode otonom (agent tentukan task sendiri)
+│   └─► Jika PROMPT = teks → Lanjut eksekusi
+│
+├─► (2) CONTEXT RETRIEVAL (Optional)
+│   ├─► Query Supabase Vector DB → Cari konteks relevan
+│   └─► Jika butuh info baru → Call search_agent.js (Tavily)
+│
+├─► (3) TASK DELEGATION
+│   ├─► Coding task → coding_agent.js
+│   ├─► Visual task → visual_agent.js  
+│   ├─► Modding task → modding_agent.js
+│   └─► General task → worker_template.js
+│
+├─► (4) EXECUTION + SAVE TEMP
+│   ├─► Agent kerjakan task
+│   ├─► Update heartbeat.js tiap 30 detik (anti-timeout)
+│   └─► Simpan hasil ke output/temp/result_*.ext
+│
+├─► (5) QC LOOP (reviewer_agent.js)
+│   ├─► Validasi syntax (JSON valid? JS no error?)
+│   ├─► Validasi logic (Output masuk akal? Sesuai prompt?)
+│   ├─► Jika FAIL → Retry max 3x + log error
+│   └─► Jika PASS → Lanjut ke SAVE FINAL
+│
+├─► (6) SAVE & STATE
+│   ├─► Embed hasil ke Supabase (untuk memori masa depan)
+│   ├─► Pindah file: output/temp/ → output/final/
+│   ├─► Update quota_checker (catat pemakaian API)
+│   └─► Git commit + push ke branch main (output/ folder)
+│
+└─► [ END: Workflow Selesai ]
+    │
+    ▼
+[ LOKAL PC: User jalankan sync.bat/sh → Auto pull → Lihat hasil di output/ → Pilih manual → Copy ke SCRIPT/ ]
+
+====================================================================
+[ SYNC SCRIPTS ] - Auto Push/Wait/Pull (No Git Command Needed)
+====================================================================
+📄 sync.bat (WINDOWS)
+@echo off
+echo [ron_GIT V1.0 - AUTO SYNC]
+if not exist "input\PROMPT.txt" (echo [ERROR] PROMPT.txt not found! & pause & exit /b 1)
+echo [1/4] Pushing PROMPT.txt... & git add input/PROMPT.txt & git commit -m "Prompt %DATE%" & git push origin main
+if errorlevel 1 (echo [ERROR] Push failed! & pause & exit /b 1)
+echo [2/4] Waiting for agent (max 5 min)... & timeout /t 300 /nobreak
+echo [3/4] Pulling results... & git pull origin main
+echo [4/4] Updating status... & echo Last Sync: %DATE% %TIME% >> status_monitor.txt
+echo [DONE] Check output/ folder & dir output\ /O-D & pause
+
+📄 sync.sh (LINUX/MAC)
+#!/bin/bash
+echo "[ron_GIT V1.0 - AUTO SYNC]"
+[ ! -f "input/PROMPT.txt" ] && echo "[ERROR] PROMPT.txt not found!" && exit 1
+echo "[1/4] Pushing PROMPT.txt..." && git add input/PROMPT.txt && git commit -m "Prompt $(date)" && git push origin main
+[ $? -ne 0 ] && echo "[ERROR] Push failed!" && exit 1
+echo "[2/4] Waiting for agent (max 5 min)..." && sleep 300
+echo "[3/4] Pulling results..." && git pull origin main
+echo "[4/4] Updating status..." && echo "Last Sync: $(date)" >> status_monitor.txt
+echo "[DONE] Check output/ folder" && ls -lt output/ | head -10
+
+📄 .gitignore (SECURITY)
+.env .env.local *.log status_monitor.txt aianswer.log .DS_Store node_modules/ *.key *.pem secret* password*
+
+====================================================================
+[ FIRST TASK - PHASE 1 Ron-AI Auto Development- Creating a NodJS HTML Game - Auto Build - 1x promt - working process - HTML  
+====================================================================
+TUJUAN: PROMPT.txt → sync.bat/sh → GitHub Actions → Groq → JSON valid → output/ → sync.bat/sh → DONE
+
+KRITERIA SUKSES:
+[ ] Workflow < 5 menit dari push → output tersedia
+[ ] Output game1.HTML, game2.HTML valid (bisa di-parse, no syntax error)
+[ ] Tidak ada API key leak di repo/log
+[ ] User bisa pull hasil tanpa conflict
+[ ] Status monitor update (sukses/gagal)
+
+FILE MINIMAL PHASE 1:
+✅ .github/workflows/ai_loop.yml
+✅ agent/architect_agent.js
+✅ utils/validator.js
+✅ utils/quota_checker.js
+✅ sync.bat + sync.sh
+✅ README.md
+✅ .gitignore
+
+DITUNDA DULU (1.1 Full):
+⏸️ Vector DB integration (Supabase)
+⏸️ Multi-agent delegation
+⏸️ File locking system
+⏸️ Heartbeat monitor (pakai timeout GitHub aja dulu)
+⏸️ Quota orchestrator global
+
+====================================================================
+[ SECURITY & PRIVACY ] - ZERO LEAK POLICY
+====================================================================
+🔒 .env LOKAL <-- Hanya untuk kunci lokal (ComfyUI Path, Ngrok Auth)
+🔒 GitHub Secrets <-- Hanya untuk kunci cloud (Groq, Supabase, Tavily)
+🚫 NO KEY IN CODE <-- Script dilarang keras hardcode API Key
+🛡️ Enkripsi Data <-- Data sensitif di Vector DB di-enkripsi sebelum kirim
+🔐 Git PAT Token <-- Scope: repo (untuk auto-commit), bukan full admin
+
+====================================================================
+[ ROADMAP ] - V1.0 → V6
+====================================================================
+Phase 1: Stabilisasi (SEKARANG)
+└── Implementasi foundation loop + quota_checker + sync scripts
+
+Phase 2: Intelligence
+└── Training reviewer_agent + Integrasi Supabase Vector DB
+
+Phase 3: Expansion
+└── Tambah search_agent.js (Tavily) + voice_agent.js (TTS)
+
+Phase 4: Autonomous
+└── Agen buat PROMPT.txt sendiri + Auto-goal generation
+
+====================================================================
+[ PENUTUP ]
+====================================================================
+✅ Kekuatan Cloud (Groq + Vector DB)
+✅ Keamanan Local (Vault .env + GitHub Secrets)
+✅ Efisiensi Biaya (Quota Manager + Free Tier Optimized)
+✅ Kualitas Output (QC Loop + Timestamp Versioning)
+✅ Kontrol Manusia (PROMPT.txt killswitch + selector manual)
+✅ Kemudahan Akses (sync.bat/sh = 1 klik, no git command)
+

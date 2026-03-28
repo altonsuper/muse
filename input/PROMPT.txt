@@ -1,0 +1,1 @@
+Create a minimal HTML game with two files. Generate a simple browser-based example that can be opened locally.
