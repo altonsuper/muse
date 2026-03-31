@@ -32,7 +32,18 @@ function validateResult(result) {
     errors.push('Result.summary must be a non-empty string');
   }
   errors.push(...validateFiles(result.generatedFiles));
-  return { ok: errors.length === 0, errors };
+
+  const ok = errors.length === 0;
+  if (!ok) {
+    const memory = require('../utils/memory');
+    memory.recordLesson({
+      prompt: result.prompt || 'Unknown prompt',
+      errors,
+      context: result.summary || 'Validation failed'
+    });
+  }
+
+  return { ok, errors };
 }
 
 module.exports = { validateResult };

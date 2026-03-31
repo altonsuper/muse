@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beatmaking Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="controls">
+            <button id="play">[play]</button>
+            <button id="pause">[pause]</button>
+            <button id="stop">[stop]</button>
+            <button id="save">[SAVE to webM/wav]</button>
+        </div>
+        <div class="bpm-container">
+            <p>BPM <input id="bpm" type="number"></p>
+            <p>Beat loop:
+                <select id="beat-loop">
+                    <option value="4">4</option>
+                    <option value="8">8</option>
+                    <option value="16">16</option>
+                    <option value="32">32</option>
+                </select>
+            </p>
+        </div>
+        <div class="volume-container">
+            <p>Low: <input id="low" type="range" min="0" max="100" value="50"></p>
+            <p>Mid: <input id="mid" type="range" min="0" max="100" value="50"></p>
+            <p>High: <input id="high" type="range" min="0" max="100" value="50"></p>
+        </div>
+        <div class="tracks-container">
+            <div class="track-container">
+                <p>Track 1: ".JSONREADER"</p>
+                <select id="track-1">
+                    <option value="kick">KICK</option>
+                    <option value="bass">Bass</option>
+                    <option value="hihat">Hihat</option>
+                    <option value="snare">Snare</option>
+                    <!-- Add AI generated options here -->
+                    <option value="a">a</option>
+                    <option value="b">b</option>
+                    <option value="c">c</option>
+                    <option value="d">d</option>
+                </select>
+            </div>
+            <div class="track-container">
+                <p>Track 2</p>
+                <select id="track-2">
+                    <option value="kick">KICK</option>
+                    <option value="bass">Bass</option>
+                    <option value="hihat">Hihat</option>
+                    <option value="snare">Snare</option>
+                    <!-- Add AI generated options here -->
+                    <option value="a">a</option>
+                    <option value="b">b</option>
+                    <option value="c">c</option>
+                    <option value="d">d</option>
+                </select>
+            </div>
+            <div class="track-container">
+                <p>Track 3</p>
+                <select id="track-3">
+                    <option value="kick">KICK</option>
+                    <option value="bass">Bass</option>
+                    <option value="hihat">Hihat</option>
+                    <option value="snare">Snare</option>
+                    <!-- Add AI generated options here -->
+                    <option value="a">a</option>
+                    <option value="b">b</option>
+                    <option value="c">c</option>
+                    <option value="d">d</option>
+                </select>
+            </div>
+            <div class="track-container">
+                <p>Track 4</p>
+                <select id="track-4">
+                    <option value="kick">KICK</option>
+                    <option value="bass">Bass</option>
+                    <option value="hihat">Hihat</option>
+                    <option value="snare">Snare</option>
+                    <!-- Add AI generated options here -->
+                    <option value="a">a</option>
+                    <option value="b">b</option>
+                    <option value="c">c</option>
+                    <option value="d">d</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

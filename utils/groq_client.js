@@ -40,27 +40,50 @@ async function callGroq(prompt) {
   lastRequestTimestamp = Date.now();
 
   const model = config.getGroqModel();
-  const url = 'https://api.groq.com/openai/v1/responses';
+  const url = 'https://api.groq.com/openai/v1/chat/completions';
   const payload = {
     model,
-    input: prompt,
+    messages: [
+      {
+        role: 'user',
+        content: prompt,
+      },
+    ],
   };
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${key}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
-  const body = await response.json();
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
 
-  return {
-    success: response.ok,
-    status: response.status,
-    data: body,
-  };
+    const body = await response.json();
+
+    if (!response.ok) {
+      return {
+        success: false,
+        status: response.status,
+        message: body.error ? body.error.message : 'Unknown API error',
+        data: body,
+      };
+    }
+
+    return {
+      success: true,
+      status: response.status,
+      data: body,
+      content: body.choices && body.choices[0] ? body.choices[0].message.content : null,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
 }
 
 module.exports = {

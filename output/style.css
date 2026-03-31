@@ -1,0 +1,28 @@
+.container {
+    width: 80%;
+    margin: 40px auto;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.bpm-container, .volume-container {
+    margin-bottom: 20px;
+}
+
+.volume-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.track-container {
+    margin-right: 20px;
+}
+
+.tracks-container {
+    display: flex;
+    flex-wrap: wrap;
+}

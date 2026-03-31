@@ -1,0 +1,12 @@
+{
+  "id": "mna5y3uprob0v4",
+  "timestamp": "2026-03-28T10:04:14.977Z",
+  "prompt": "Create a minimal HTML game with two files. Generate a simple browser-based example that can be opened locally.",
+  "resultSummary": "Generated HTML output from the requested prompt.",
+  "source": "fallback",
+  "payload": {
+    "fileCount": 2,
+    "responseStatus": 404
+  },
+  "createdAt": "2026-03-31T17:05:52.731Z"
+}

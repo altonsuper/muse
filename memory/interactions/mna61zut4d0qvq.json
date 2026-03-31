@@ -1,0 +1,12 @@
+{
+  "id": "mna61zut4d0qvq",
+  "timestamp": "2026-03-28T10:07:16.421Z",
+  "prompt": "Create a minimal HTML game with two files. Generate a simple browser-based example that can be opened locally.",
+  "resultSummary": "Generated result from Groq API response.",
+  "source": "groq",
+  "payload": {
+    "fileCount": 1,
+    "responseStatus": 200
+  },
+  "createdAt": "2026-03-31T17:05:52.734Z"
+}
