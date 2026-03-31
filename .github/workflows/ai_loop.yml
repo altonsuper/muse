@@ -36,7 +36,8 @@ jobs:
         run: |
           git config --global user.name "ron_GIT Bot"
           git config --global user.email "bot@ron-git.ai"
-          git add output/ aianswer.log status_monitor.txt .quota.json
+          git add output/
+          git add -f aianswer.log status_monitor.txt .quota.json memory/
           git commit -m "AI Update: $(date +'%Y-%m-%d %H:%M')" || echo "No changes to commit"
           git push origin main
         env:
