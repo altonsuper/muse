@@ -36,11 +36,13 @@ function addMemory(entry) {
   return db.insert('interactions', entry);
 }
 
-function recordInteraction({ prompt, resultSummary, source, payload }) {
+function recordInteraction({ prompt, resultSummary, source, payload, thoughts, context }) {
   const entry = {
     prompt,
     resultSummary,
     source,
+    thoughts: thoughts || 'No thoughts recorded.',
+    context: context || 'No context used.',
     payload: payload || null,
   };
   return addMemory(entry);

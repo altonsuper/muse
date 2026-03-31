@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beatmaking Game</title>
+    <link rel="stylesheet" href="2.styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Game controls -->
+        <button id="play-button">Play</button>
+        <button id="pause-button">Pause</button>
+        <button id="stop-button">Stop</button>
+        <button id="save-button">Save to WebM/WAV</button>
+        <!-- BPM control -->
+        <input id="bpm-input" type="number" placeholder="BPM">
+        <button id="bpm-button">Set</button>
+        <!-- Beat loop control -->
+        <select id="beat-loop-select">
+            <option value="4">4/8/16/32 beat loop</option>
+        </select>
+        <!-- Track controls -->
+        <div class="track-controls">
+            <div class="track-control">
+                <span>Track 1</span>
+                <!-- JSON reader control -->
+                <button id="json-button">.JSONREADER</button>
+            </div>
+            <div class="track-control">
+                <span>Track 2</span>
+                <button id="track2-button">Track 2</button>
+            </div>
+            <div class="track-control">
+                <span>Track 3</span>
+                <button id="track3-button">Track 3</button>
+            </div>
+            <div class="track-control">
+                <span>Track 4</span>
+                <button id="track4-button">Track 4</button>
+            </div>
+        </div>
+        <!-- Effect controls -->
+        <div class="effect-controls">
+            <div class="effect-control">
+                <span>KICK</span>
+                <!-- Pin control -->
+                <input id="kick-input" type="range" min="0" max="100">
+                <output id="kick-output">0</output>
+            </div>
+            <div class="effect-control">
+                <span>BASS</span>
+                <!-- Pin control -->
+                <input id="bass-input" type="range" min="0" max="100">
+                <output id="bass-output">0</output>
+            </div>
+            <div class="effect-control">
+                <span>Hihat</span>
+                <!-- Pin control -->
+                <input id="hihat-input" type="range" min="0" max="100">
+                <output id="hihat-output">0</output>
+            </div>
+            <div class="effect-control">
+                <span>Snare</span>
+                <!-- Pin control -->
+                <input id="snare-input" type="range" min="0" max="100">
+                <output id="snare-output">0</output>
+            </div>
+        </div>
+        <!-- Hints control -->
+        <div class="hint-controls">
+            <span>Hint: </span>
+            <button id="a-button">a</button>
+            <button id="b-button">b</button>
+            <button id="c-button">c</button>
+            <button id="d-button">d</button>
+        </div>
+    </div>
+
+    <script src="3.script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/file-saver/2.0.2/file-saver.min.js"></script>
+</body>
+</html>

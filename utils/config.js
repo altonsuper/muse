@@ -93,6 +93,23 @@ function isGroqEnabled() {
   return getBoolean('ENABLE_GROQ', false);
 }
 
+function hasTavily() {
+  return !!getEnv('TAVILY_API_KEY');
+}
+
+function hasSupabase() {
+  return !!getEnv('SUPABASE_URL') && !!getEnv('SUPABASE_KEY');
+}
+
+function getFeatures() {
+  return {
+    groq: isGroqEnabled(),
+    search: hasTavily(),
+    cloudMemory: hasSupabase(),
+    localMemory: true, // Always enabled
+  };
+}
+
 module.exports = {
   getEnv,
   getNumber,
@@ -102,4 +119,7 @@ module.exports = {
   getAgentLoopDelay,
   getMaxContextFiles,
   isGroqEnabled,
+  hasTavily,
+  hasSupabase,
+  getFeatures,
 };
