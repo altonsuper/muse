@@ -1,31 +1,48 @@
+<!-- Beatmaker Drum Pad Interface -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beatmaker Drum Pad</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="drum-pad-container">
-        <button class="drum-pad" id="kick-drum">
-            <span>Kick Drum</span>
-        </button>
-        <button class="drum-pad" id="hi-hat">
-            <span>Hi-Hat</span>
-        </button>
-        <button class="drum-pad" id="snare-drum">
-            <span>Snare Drum</span>
-        </button>
-        <button class="drum-pad" id="percussive-synth">
-            <span>Percussive Synth</span>
-        </button>
-        <div id="output">
-            <p>Press a drum pad to play</p>
-            <p>Hold a drum pad to sustain</p>
-        </div>
+    <style>
+      /* Add some basic styling to the interface */
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      #drum-pad {
+        margin: 40px auto;
+        padding: 20px;
+        width: 80%;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      }
+      #drum-button {
+        margin: 10px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: #fff;
+        cursor: pointer;
+      }
+      #drum-button:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="drum-pad">
+      <button id="kick-drum" class="drum-button">Kick Drum</button>
+      <button id="hi-hat" class="drum-button">Hi-Hat</button>
+      <button id="snare-drum" class="drum-button">Snare Drum</button>
+      <button id="percussive-synth" class="drum-button">Percussive Synth</button>
+      <button id="play-button" class="drum-button">Play</button>
     </div>
-
+    <!-- Add event listeners to the buttons to play the sounds -->
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
