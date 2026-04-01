@@ -1,2 +1,2 @@
-Test Phase 2.5: Generate a simple Beatmaker Drum Pad with 4 sounds. Use your new THOUGHTS schema to explain why you chose these sounds. 
-Ensure the output is valid HTML/JS and uses the local memory successfully.
+2.5 Generate a simple Beatmaker Drum Pad with 4 sounds. Use your new THOUGHTS schema to explain why you chose these sounds. 
+Ensure the output is valid HTML and uses the local memory successfully.
